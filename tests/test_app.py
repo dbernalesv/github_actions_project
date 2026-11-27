@@ -14,7 +14,9 @@ def test_home_page_returns_application_content(client):
     response = client.get("/")
 
     assert response.status_code == 200
-    assert "Aplicación Flask lista" in response.get_data(as_text=True)
+    page = response.get_data(as_text=True)
+    assert "Aplicación Flask lista" in page
+    assert 'href="/version"' in page
 
 
 def test_health_endpoint_reports_ok(client):
