@@ -25,7 +25,7 @@ docker run --rm -p 8080:8080 github_actions_project:local
 
 El workflow `CI/CD` llama los workflows reutilizables del repositorio público [`github_actions_templates`](https://github.com/dbernalesv/github_actions_templates), fijados a una revisión por SHA.
 
-- En pull requests a `main` y pushes a `main`, ejecuta las pruebas Python.
-- Después de que las pruebas pasen en un push a `main`, construye y publica la imagen en Docker Hub con los tags `latest` y `sha-<commit>`.
+- En pull requests a `main`, ejecuta las pruebas Python.
+- En pushes a `main` (incluido el merge del PR), construye y publica la imagen en Docker Hub con los tags `latest` y `sha-<commit>`.
 
 La publicación recibe los repository secrets `DOCKERHUB_USERNAME` y `DOCKERHUB_TOKEN`. El workflow de pruebas no recibe secretos.
