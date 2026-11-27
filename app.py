@@ -22,6 +22,7 @@ def index():
       <h1>Aplicación Flask lista</h1>
       <p>CI/CD con GitHub Actions y Docker Hub.</p>
       <p>Estado: <a href="/health">/health</a></p>
+      <p>Versión: <a href="/version">consultar versión</a></p>
     </main>
   </body>
 </html>"""
