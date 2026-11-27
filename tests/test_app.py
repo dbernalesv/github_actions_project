@@ -22,3 +22,12 @@ def test_health_endpoint_reports_ok(client):
 
     assert response.status_code == 200
     assert response.get_json() == {"status": "ok"}
+
+
+def test_version_endpoint_reports_build_version(client, monkeypatch):
+    monkeypatch.setenv("APP_VERSION", "test-build-123")
+
+    response = client.get("/version")
+
+    assert response.status_code == 200
+    assert response.get_json() == {"version": "test-build-123"}

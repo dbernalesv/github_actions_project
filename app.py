@@ -1,5 +1,7 @@
 """Small Flask application for the GitHub Actions CI/CD project."""
 
+import os
+
 from flask import Flask, jsonify
 
 app = Flask(__name__)
@@ -29,6 +31,12 @@ def index():
 def health():
     """Provide a simple health-check response."""
     return jsonify(status="ok")
+
+
+@app.get("/version")
+def version():
+    """Expose the version embedded in the built image."""
+    return jsonify(version=os.getenv("APP_VERSION", "dev"))
 
 
 if __name__ == "__main__":
