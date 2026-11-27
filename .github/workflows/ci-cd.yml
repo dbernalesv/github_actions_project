@@ -52,7 +52,6 @@ jobs:
           build-args: |
             APP_VERSION=${{ github.sha }}
           tags: |
-            diegobernales/github_actions_project:run-${{ github.run_number }}-${{ github.run_attempt }}
             diegobernales/github_actions_project:sha-${{ github.sha }}
             diegobernales/github_actions_project:latest
           cache-from: type=gha
@@ -62,14 +61,12 @@ jobs:
         env:
           IMAGE_NAME: diegobernales/github_actions_project
           IMAGE_DIGEST: ${{ steps.build.outputs.digest }}
-          RUN_NUMBER: ${{ github.run_number }}
-          RUN_ATTEMPT: ${{ github.run_attempt }}
           COMMIT_SHA: ${{ github.sha }}
         run: |
           {
             echo "## Docker Hub image"
             echo "- Image: ${IMAGE_NAME}"
-            echo "- Run tag: run-${RUN_NUMBER}-${RUN_ATTEMPT}"
             echo "- Commit tag: sha-${COMMIT_SHA}"
+            echo "- Alias: latest"
             echo "- Digest: ${IMAGE_DIGEST}"
           } >> "$GITHUB_STEP_SUMMARY"

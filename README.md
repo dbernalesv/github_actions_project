@@ -23,4 +23,4 @@ docker run --rm -p 8080:8080 github_actions_project:local
 
 ## CI/CD
 
-GitHub Actions ejecuta las pruebas y construye la imagen en pull requests y pushes a `main`. Solo los pushes a `main` publican en Docker Hub. El workflow requiere los repository secrets `DOCKERHUB_USERNAME` y `DOCKERHUB_TOKEN`.
+GitHub Actions ejecuta las pruebas y construye la imagen en pull requests y pushes a `main`. Solo los pushes a `main` publican en Docker Hub con los tags `latest` y `sha-<commit>`. El workflow requiere los repository secrets `DOCKERHUB_USERNAME` y `DOCKERHUB_TOKEN`.
