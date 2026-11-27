@@ -17,56 +17,18 @@ concurrency:
 
 jobs:
   test:
-    name: Test and build
-    uses: ./.github/workflows/reusable-ci.yml
+    name: Ejecutar pruebas reutilizables
+    uses: dbernalesv/github_actions_templates/.github/workflows/python-tests.yml@fcf48037f6e4b186a884a944f8bf2c2327d5fa47
     with:
       python-version: "3.12"
-      image-name: diegobernales/github_actions_project
 
   publish:
-    name: Publish image to Docker Hub
+    name: Publicar imagen en Docker Hub
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: test
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push image
-        id: build
-        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
-        with:
-          context: .
-          push: true
-          build-args: |
-            APP_VERSION=${{ github.sha }}
-          tags: |
-            diegobernales/github_actions_project:sha-${{ github.sha }}
-            diegobernales/github_actions_project:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-      - name: Publish image summary
-        env:
-          IMAGE_NAME: diegobernales/github_actions_project
-          IMAGE_DIGEST: ${{ steps.build.outputs.digest }}
-          COMMIT_SHA: ${{ github.sha }}
-        run: |
-          {
-            echo "## Docker Hub image"
-            echo "- Image: ${IMAGE_NAME}"
-            echo "- Commit tag: sha-${COMMIT_SHA}"
-            echo "- Alias: latest"
-            echo "- Digest: ${IMAGE_DIGEST}"
-          } >> "$GITHUB_STEP_SUMMARY"
+    uses: dbernalesv/github_actions_templates/.github/workflows/docker-publish.yml@fcf48037f6e4b186a884a944f8bf2c2327d5fa47
+    with:
+      image-name: diegobernales/github_actions_project
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
