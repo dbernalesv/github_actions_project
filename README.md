@@ -2,6 +2,8 @@
 
 Aplicación web pequeña con Flask, pruebas automatizadas y publicación de una imagen Docker mediante GitHub Actions.
 
+Verificación temporal del disparador de pull request.
+
 ## Ejecutar localmente
 
 ```powershell
