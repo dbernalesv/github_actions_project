@@ -12,7 +12,7 @@ python -m pytest
 python app.py
 ```
 
-La aplicación estará disponible en <http://127.0.0.1:8080/> y el estado de salud en <http://127.0.0.1:8080/health>.
+La aplicación estará disponible en <http://127.0.0.1:8080/>. Los endpoints `/health` y `/version` muestran el estado y la versión de compilación. En local, la versión predeterminada es `dev`; la imagen publicada recibe el SHA del commit.
 
 ## Construir y ejecutar con Docker
 

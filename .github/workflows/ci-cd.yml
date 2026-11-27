@@ -49,6 +49,8 @@ jobs:
         with:
           context: .
           push: true
+          build-args: |
+            APP_VERSION=${{ github.sha }}
           tags: |
             diegobernales/github_actions_project:run-${{ github.run_number }}-${{ github.run_attempt }}
             diegobernales/github_actions_project:sha-${{ github.sha }}
